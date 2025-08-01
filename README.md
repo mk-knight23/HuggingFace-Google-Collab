@@ -2,6 +2,7 @@
 
 This project demonstrates how to generate images from text prompts using advanced AI models from Hugging Face, focusing on Stable Diffusion. The notebook guides you through setup, model loading, prompt engineering, and parameter tuning for creative image generation.
 
+### https://chat.qwen.ai/s/deploy/dac3cc01-ddd2-4314-ab9a-997e077af25f
 ## Features
 - Generate images from custom text prompts
 - Experiment with different Stable Diffusion models
