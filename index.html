@@ -1,208 +1,353 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text-to-Image Generation with Stable Diffusion</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #4f46e5;
-            --background-color: #f8fafc;
-            --text-color: #1e293b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
+            font-family: 'Inter', sans-serif;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        .gradient-text {
+            background: linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
+        .card-hover {
+            transition: all 0.3s ease;
         }
-
-        .hero {
-            margin-bottom: 3rem;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
+        .card-hover:hover {
             transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
-        .feature-icon {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .getting-started {
-            background: white;
-            padding: 3rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 4rem 0;
-        }
-
-        .code-block {
-            background: #1e1e1e;
-            color: #fff;
-            padding: 1.5rem;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        .example-prompts {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 4rem 0;
-        }
-
-        .prompt {
-            background: #f1f5f9;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: var(--primary-color);
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 1rem;
-            transition: background 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background: var(--secondary-color);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            background: white;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            font-size: 14px;
         }
     </style>
 </head>
-<body>
-    <header>
-        <div class="container hero">
-            <h1>Text-to-Image Generation</h1>
-            <p>Transform your creative ideas into stunning images using Stable Diffusion and Hugging Face models</p>
-        </div>
-    </header>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6 gradient-text">Text-to-Image Generation with Stable Diffusion</h1>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                A comprehensive guide to generating stunning images from text prompts using state-of-the-art AI models from Hugging Face
+            </p>
+            <div class="mt-8 flex justify-center">
+                <div class="bg-white rounded-full px-6 py-2 shadow-md flex items-center space-x-2">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm text-slate-600 font-medium">Ready for AI Magic</span>
+                </div>
+            </div>
+        </header>
 
-    <main class="container">
-        <section class="features">
-            <div class="feature-card">
-                <i class="fas fa-magic feature-icon"></i>
-                <h2>AI-Powered Creation</h2>
-                <p>Generate unique images from text descriptions using state-of-the-art AI models.</p>
+        <!-- Introduction -->
+        <section class="mb-16 bg-white rounded-2xl shadow-lg p-8 card-hover">
+            <div class="flex items-center mb-6">
+                <div class="step-number mr-4">1</div>
+                <h2 class="text-2xl font-bold text-slate-800">Introduction</h2>
             </div>
-            <div class="feature-card">
-                <i class="fas fa-sliders-h feature-icon"></i>
-                <h2>Customizable</h2>
-                <p>Fine-tune parameters like image size, quality, and style to get exactly what you want.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-bolt feature-icon"></i>
-                <h2>Fast & Efficient</h2>
-                <p>Leverage GPU acceleration for quick image generation and immediate results.</p>
+            <div class="prose max-w-none text-slate-700 leading-relaxed">
+                <p class="mb-4">
+                    This interactive guide demonstrates how to generate images from text prompts using state-of-the-art AI models from Hugging Face. The main focus is on Stable Diffusion, a powerful text-to-image model that has revolutionized digital art creation.
+                </p>
+                <p>
+                    With just a simple text description, you can create stunning, photorealistic images that were previously only possible through hours of manual artistic work or professional photography.
+                </p>
             </div>
         </section>
 
-        <section class="getting-started">
-            <h2>Getting Started</h2>
-            <p>Install the required dependencies:</p>
-            <div class="code-block">
-                <code>pip install diffusers transformers accelerate</code>
+        <!-- Installation Section -->
+        <section class="mb-16 bg-white rounded-2xl shadow-lg p-8 card-hover">
+            <div class="flex items-center mb-6">
+                <div class="step-number mr-4">2</div>
+                <h2 class="text-2xl font-bold text-slate-800">Installing Required Libraries</h2>
             </div>
-            <a href="https://github.com/huggingface/diffusers" class="cta-button">View Documentation</a>
-        </section>
-
-        <section class="example-prompts">
-            <h2>Example Prompts</h2>
-            <div class="prompt">
-                <p>"A grungy woman with rainbow hair, travelling between dimensions, dynamic pose, happy, soft eyes and narrow chin, extreme bokeh, dainty figure, long hair straight down, torn kawaii shirt and baggy jeans"</p>
+            <div class="bg-slate-900 rounded-lg p-6 overflow-x-auto">
+                <pre class="text-green-400 text-sm"><code>!pip install diffusers transformers accelerate torch matplotlib</code></pre>
             </div>
-            <div class="prompt">
-                <p>"A girl is sitting on a chair & She is accompanied by her tiger. Make sure to keep it cinematic and color to be golden iris"</p>
-            </div>
-        </section>
-
-        <section class="features">
-            <div class="feature-card">
-                <i class="fas fa-code feature-icon"></i>
-                <h2>Easy Integration</h2>
-                <p>Simple Python code that works right in your Jupyter notebook.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-palette feature-icon"></i>
-                <h2>Creative Control</h2>
-                <p>Use negative prompts and parameter tuning for precise results.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-chart-line feature-icon"></i>
-                <h2>Immediate Results</h2>
-                <p>See your generated images instantly in the notebook.</p>
+            <div class="mt-6 text-slate-600">
+                <p>
+                    We install the essential libraries for accessing and running diffusion models:
+                </p>
+                <ul class="list-disc list-inside mt-2 space-y-1 text-sm">
+                    <li><span class="font-semibold">diffusers</span> - Main library for text-to-image generation</li>
+                    <li><span class="font-semibold">transformers</span> - For model compatibility and advanced features</li>
+                    <li><span class="font-semibold">accelerate</span> - For efficient hardware utilization (especially GPUs)</li>
+                    <li><span class="font-semibold">torch</span> - The deep learning framework powering the models</li>
+                    <li><span class="font-semibold">matplotlib</span> - For image visualization</li>
+                </ul>
             </div>
         </section>
-    </main>
 
-    <footer>
-        <p>Built with <i class="fas fa-heart" style="color: var(--primary-color);"></i> using Hugging Face Diffusers</p>
-        <p>For educational and research purposes only</p>
-    </footer>
+        <!-- Model Loading Section -->
+        <section class="mb-16 bg-white rounded-2xl shadow-lg p-8 card-hover">
+            <div class="flex items-center mb-6">
+                <div class="step-number mr-4">5</div>
+                <h2 class="text-2xl font-bold text-slate-800">Loading the Model</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-semibold text-slate-800 mb-4">Available Models</h3>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 p-3 rounded-lg border-l-4 border-purple-500">
+                            <div class="font-medium text-purple-800">dreamlike-art/dreamlike-diffusion-1.0</div>
+                            <div class="text-sm text-purple-600">Artistic style with dreamlike qualities</div>
+                        </div>
+                        <div class="bg-pink-50 p-3 rounded-lg border-l-4 border-pink-500">
+                            <div class="font-medium text-pink-800">stabilityai/stable-diffusion-xl-base-1.0</div>
+                            <div class="text-sm text-pink-600">High-resolution, photorealistic output</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-slate-800 mb-4">Loading Process</h3>
+                    <div class="bg-slate-900 rounded-lg p-4">
+                        <pre class="text-green-400 text-sm"><code>from diffusers import StableDiffusionPipeline
+
+model_id = "dreamlike-art/dreamlike-diffusion-1.0"
+pipe = StableDiffusionPipeline.from_pretrained(model_id)
+pipe = pipe.to("cuda")</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                <div class="flex items-start">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <p class="text-blue-800 text-sm">
+                            The model is loaded from Hugging Face's model hub and moved to the GPU for accelerated processing. This typically takes 1-2 minutes for the first load, after which subsequent generations are much faster.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Generation Examples -->
+        <section class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="step-number mr-4">6</div>
+                <h2 class="text-2xl font-bold text-slate-800">Image Generation Examples</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                <!-- Example 1 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <div class="p-6">
+                        <h3 class="font-semibold text-slate-800 mb-3">Prompt 1</h3>
+                        <p class="text-slate-600 text-sm mb-4 bg-slate-50 p-3 rounded">
+                            "A grungy woman with rainbow hair, travelling between dimensions, surrounded by cosmic energy, surreal digital art"
+                        </p>
+                        <div class="aspect-square bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 rounded-lg flex items-center justify-center">
+                            <div class="text-white text-center p-4">
+                                <svg class="w-16 h-16 mx-auto mb-2 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"></path>
+                                </svg>
+                                <p class="text-sm">Generated Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Example 2 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <div class="p-6">
+                        <h3 class="font-semibold text-slate-800 mb-3">Prompt 2</h3>
+                        <p class="text-slate-600 text-sm mb-4 bg-slate-50 p-3 rounded">
+                            "A girl is sitting on a chair & She is accompanied by her tiger, peaceful forest setting, golden hour lighting, fantasy art"
+                        </p>
+                        <div class="aspect-square bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <div class="text-white text-center p-4">
+                                <svg class="w-16 h-16 mx-auto mb-2 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"></path>
+                                </svg>
+                                <p class="text-sm">Generated Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Parameters -->
+        <section class="mb-16 bg-white rounded-2xl shadow-lg p-8 card-hover">
+            <div class="flex items-center mb-6">
+                <div class="step-number mr-4">9</div>
+                <h2 class="text-2xl font-bold text-slate-800">Model Parameters</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.9.15 2.038-.734 2.6-1.56.38-1.56 2.6 0 2.98a1.532 1.532 0 01.947 2.286c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.286.947c.38 1.56 2.6 1.56 2.98 0a1.533 1.533 0 012.286-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.286c1.56-.38 1.56-2.6 0-2.98a1.532 1.532 0 01-.947-2.286c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.286-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 mb-2">num_inference_steps</h3>
+                    <p class="text-sm text-slate-600">20-50 steps for quality balance</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl border border-purple-100">
+                    <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 mb-2">Negative Prompt</h3>
+                    <p class="text-sm text-slate-600">Avoid unwanted features</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gradient-to-br from-green-50 to-teal-50 rounded-xl border border-green-100">
+                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm8 11a1 1 0 100-2 1 1 0 000 2zm-4 0a1 1 0 100-2 1 1 0 000 2zm4-6a1 1 0 100-2 1 1 0 000 2zm-4 0a1 1 0 100-2 1 1 0 000 2zm4-6a1 1 0 100-2 1 1 0 000 2zm-4 0a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 mb-2">Height/Width</h3>
+                    <p class="text-sm text-slate-600">512x512 default, up to 1024</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl border border-orange-100">
+                    <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 mb-2">num_images_per_prompt</h3>
+                    <p class="text-sm text-slate-600">Generate multiple variations</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technologies Used -->
+        <section class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">Technologies Used</h2>
+                <div class="grid md:grid-cols-5 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-800">Hugging Face</h3>
+                        <p class="text-sm text-slate-600">Diffusers</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-800">Transformers</h3>
+                        <p class="text-sm text-slate-600">Model Framework</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-800">Accelerate</h3>
+                        <p class="text-sm text-slate-600">Hardware Utilization</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-800">PyTorch</h3>
+                        <p class="text-sm text-slate-600">Deep Learning</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-800">Matplotlib</h3>
+                        <p class="text-sm text-slate-600">Visualization</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why It's Interesting -->
+        <section class="mb-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-lg p-8 text-white">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-8">What Makes This Notebook Interesting?</h2>
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Creativity Unleashed</h3>
+                        <p class="text-sm text-white/90">Instantly turn your wildest ideas into art with just a sentence!</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.9.15 2.038-.734 2.6-1.56.38-1.56 2.6 0 2.98a1.532 1.532 0 01.947 2.286c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.286.947c.38 1.56 2.6 1.56 2.98 0a1.533 1.533 0 012.286-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.286c1.56-.38 1.56-2.6 0-2.98a1.532 1.532 0 01-.947-2.286c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.286-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Hands-On AI</h3>
+                        <p class="text-sm text-white/90">No need for deep ML knowledge—just run the cells and see magic happen.</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Cutting-Edge Models</h3>
+                        <p class="text-sm text-white/90">Uses some of the best open-source AI models available today.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tip Section -->
+        <section class="text-center bg-white rounded-2xl shadow-lg p-8">
+            <div class="max-w-2xl mx-auto">
+                <div class="flex items-center justify-center w-16 h-16 bg-yellow-100 rounded-full mx-auto mb-6">
+                    <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-slate-800 mb-4">Pro Tip</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    Try adding interactive widgets for prompt input or sliders for parameters to make your notebook even more engaging and user-friendly!
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 pt-8 border-t border-slate-200">
+            <p class="text-slate-500">
+                Created with ❤️ for AI enthusiasts and creative minds
+            </p>
+        </footer>
+    </div>
 </body>
 </html>
+```
