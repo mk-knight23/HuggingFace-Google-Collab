@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Image Generation with Stable Diffusion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero {
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .getting-started {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 4rem 0;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .example-prompts {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 4rem 0;
+        }
+
+        .prompt {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            background: white;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container hero">
+            <h1>Text-to-Image Generation</h1>
+            <p>Transform your creative ideas into stunning images using Stable Diffusion and Hugging Face models</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-magic feature-icon"></i>
+                <h2>AI-Powered Creation</h2>
+                <p>Generate unique images from text descriptions using state-of-the-art AI models.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-sliders-h feature-icon"></i>
+                <h2>Customizable</h2>
+                <p>Fine-tune parameters like image size, quality, and style to get exactly what you want.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt feature-icon"></i>
+                <h2>Fast & Efficient</h2>
+                <p>Leverage GPU acceleration for quick image generation and immediate results.</p>
+            </div>
+        </section>
+
+        <section class="getting-started">
+            <h2>Getting Started</h2>
+            <p>Install the required dependencies:</p>
+            <div class="code-block">
+                <code>pip install diffusers transformers accelerate</code>
+            </div>
+            <a href="https://github.com/huggingface/diffusers" class="cta-button">View Documentation</a>
+        </section>
+
+        <section class="example-prompts">
+            <h2>Example Prompts</h2>
+            <div class="prompt">
+                <p>"A grungy woman with rainbow hair, travelling between dimensions, dynamic pose, happy, soft eyes and narrow chin, extreme bokeh, dainty figure, long hair straight down, torn kawaii shirt and baggy jeans"</p>
+            </div>
+            <div class="prompt">
+                <p>"A girl is sitting on a chair & She is accompanied by her tiger. Make sure to keep it cinematic and color to be golden iris"</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-code feature-icon"></i>
+                <h2>Easy Integration</h2>
+                <p>Simple Python code that works right in your Jupyter notebook.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-palette feature-icon"></i>
+                <h2>Creative Control</h2>
+                <p>Use negative prompts and parameter tuning for precise results.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h2>Immediate Results</h2>
+                <p>See your generated images instantly in the notebook.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built with <i class="fas fa-heart" style="color: var(--primary-color);"></i> using Hugging Face Diffusers</p>
+        <p>For educational and research purposes only</p>
+    </footer>
+</body>
+</html>
